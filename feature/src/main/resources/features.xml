@@ -2,8 +2,8 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0" name="${project.groupId}/${project.groupId}.feature-${project.version}">
     <repository>mvn:org.apache.karaf.assemblies.features/standard/${project.version}/xml/features</repository>
     <feature version="${project.version}" name="scr">
+        <feature version="${project.version}">eventadmin</feature>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/${felix.metatype.version}</bundle>
-        <bundle>mvn:org.apache.felix/org.apache.felix.eventadmin/${felix.eventadmin.version}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.scr/${felix.scr.version}</bundle>
         <!--bundle>mvn:org.fusesource.jansi/jansi/${jansi.version}</bundle-->
         <bundle>mvn:${project.groupId}/${project.groupId}.command/${project.version}</bundle>

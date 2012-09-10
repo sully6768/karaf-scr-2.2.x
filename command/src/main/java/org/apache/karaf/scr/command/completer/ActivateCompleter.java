@@ -21,15 +21,14 @@ import org.apache.felix.scr.Component;
 public class ActivateCompleter extends ScrCompleterSupport {
 
     /**
-     * Overrides the super method noted below. See super documentation
-     * for details.
+     * Overrides the super method noted below. See super documentation for
+     * details.
      * 
      * @see org.apache.karaf.scr.command.completer.ScrCompleterSupport#availableComponent(org.apache.felix.scr.Component)
      */
     @Override
     public boolean availableComponent(Component component) throws Exception {
-        return (component != null 
-                && component.getState() != Component.STATE_ACTIVE);
+        return (component != null && component.getState() == Component.STATE_DISABLED);
     }
 
 }

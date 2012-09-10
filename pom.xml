@@ -44,18 +44,18 @@
     <modules>
         <module>command</module>
         <module>management</module>
-        <module>examples</module>
+<!--         <module>examples</module> -->
         <module>feature</module>
     </modules>
-
+    
     <distributionManagement>
         <repository>
             <id>release-repo</id>
-            <url>https://raw.github.com/sully6768/sully6768-mvn-repo/master/releases</url>
+            <url>https://sully6768.github.com/repos/releases</url>
         </repository>
         <snapshotRepository>
             <id>snapshot-repo</id>
-            <url>https://raw.github.com/sully6768/sully6768-mvn-repo/master/snapshots</url>
+            <url>https://sully6768.github.com/repos/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 

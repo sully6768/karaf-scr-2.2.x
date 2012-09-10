@@ -25,29 +25,39 @@ import org.apache.karaf.scr.command.ScrUtils;
 /**
  * Lists all the components currently installed.
  */
-@Command(
-        scope = ScrCommandConstants.SCR_COMMAND, 
-        name = ScrCommandConstants.LIST_FUNCTION, 
-        description = "Displays a list of available components")
+@Command(scope = ScrCommandConstants.SCR_COMMAND, 
+         name = ScrCommandConstants.LIST_FUNCTION, 
+         description = "Displays a list of available components")
 public class ListAction extends ScrActionSupport {
-
+    
     @Override
     protected Object doScrAction(ScrService scrService) throws Exception {
-        if(logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             logger.debug("Executing the List Action");
         }
-        System.out.println(getBoldString(
-                "   ID   State             Component Name"));
+        System.out.println(getBoldString("   ID   State             Component Name"));
         Component[] components = scrService.getComponents();
         for (Component component : ScrUtils.emptyIfNull(Component.class, components)) {
-            String name = component.getName();
-            String id = buildLeftPadBracketDisplay(component.getId() + "", 4);
-            String state = buildRightPadBracketDisplay(
-                    ScrUtils.getState(component.getState()), 16);
-            System.out.println(
-            		"[" + id + "] [" + state + "] " + name);
+            if (showHidden) {
+                // We display all because we are overridden
+                printComponent(component);
+            } else {
+                if (ScrActionSupport.isHiddenComponent(component)) {
+                    // do nothing
+                } else {
+                    // We aren't hidden so print it
+                    printComponent(component);       
+                }
+            }
         }
         return null;
+    }
+
+    private void printComponent(Component component) {
+        String name = component.getName();
+        String id = buildLeftPadBracketDisplay(component.getId() + "", 4);
+        String state = buildRightPadBracketDisplay(ScrUtils.getState(component.getState()), 16);
+        System.out.println("[" + id + "] [" + state + "] " + name);
     }
 
 }

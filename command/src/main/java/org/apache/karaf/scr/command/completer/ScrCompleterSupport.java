@@ -20,14 +20,14 @@ import java.util.List;
 
 import org.apache.felix.scr.Component;
 import org.apache.felix.scr.ScrService;
+import org.apache.karaf.scr.command.action.ScrActionSupport;
 import org.apache.karaf.shell.console.Completer;
 import org.apache.karaf.shell.console.completer.StringsCompleter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class ScrCompleterSupport implements Completer {
-    
+
     protected final transient Logger logger = LoggerFactory.getLogger(ScrCompleterSupport.class);
 
     private ScrService scrService;
@@ -35,7 +35,7 @@ public abstract class ScrCompleterSupport implements Completer {
     /**
      * Overrides the super method noted below. See super documentation for
      * details.
-     *
+     * 
      * @see org.apache.karaf.shell.console.Completer#complete(java.lang.String,
      *      int, java.util.List)
      */
@@ -43,11 +43,23 @@ public abstract class ScrCompleterSupport implements Completer {
         StringsCompleter delegate = new StringsCompleter();
         try {
             for (Component component : scrService.getComponents()) {
-                if(logger.isDebugEnabled()){
+                if (logger.isDebugEnabled()) {
                     logger.debug("Component Name to work on: " + component.getName());
                 }
-                if (availableComponent(component)) {
-                    delegate.getStrings().add(component.getName());
+                if (ScrActionSupport.showHiddenComponent(component)) {
+                    // We display all because we are overridden
+                    if (availableComponent(component)) {
+                        delegate.getStrings().add(component.getName());
+                    } 
+                } else {
+                    if (ScrActionSupport.isHiddenComponent(component)) {
+                        // do nothing
+                    } else {
+                        // We aren't hidden so print it
+                        if (availableComponent(component)) {
+                            delegate.getStrings().add(component.getName());
+                        }   
+                    }
                 }
             }
         } catch (Exception e) {
@@ -56,13 +68,12 @@ public abstract class ScrCompleterSupport implements Completer {
         return delegate.complete(buffer, cursor, candidates);
     }
 
-    public abstract boolean availableComponent(Component component)
-            throws Exception;
+    public abstract boolean availableComponent(Component component) throws Exception;
 
     /**
      * Get the scrService Object associated with this instance of
      * ScrCompleterSupport.
-     *
+     * 
      * @return the scrService
      */
     public ScrService getScrService() {
@@ -71,7 +82,7 @@ public abstract class ScrCompleterSupport implements Completer {
 
     /**
      * Sets the scrService Object for this ScrCompleterSupport instance.
-     *
+     * 
      * @param scrService the scrService to set
      */
     public void setScrService(ScrService scrService) {

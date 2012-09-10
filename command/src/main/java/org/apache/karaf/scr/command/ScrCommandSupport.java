@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class ScrCommandSupport extends AbstractCommand implements CompletableFunction {
-    
+
     protected final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     private ScrService scrService;
@@ -48,8 +48,7 @@ public abstract class ScrCommandSupport extends AbstractCommand implements Compl
     public Action createNewAction() {
         try {
             lock.readLock().lock();
-            ScrActionSupport action = (ScrActionSupport) getActionClass()
-                    .newInstance();
+            ScrActionSupport action = (ScrActionSupport)getActionClass().newInstance();
             action.setScrService(getScrService());
             return action;
         } catch (InstantiationException e) {
@@ -69,8 +68,7 @@ public abstract class ScrCommandSupport extends AbstractCommand implements Compl
                 lock.readLock().lock();
                 completers = new ArrayList<Completer>();
                 for (Class<? extends Completer> completerClass : getCompleterClasses()) {
-                    ScrCompleterSupport ccs = (ScrCompleterSupport) completerClass
-                            .newInstance();
+                    ScrCompleterSupport ccs = (ScrCompleterSupport)completerClass.newInstance();
                     ccs.setScrService(scrService);
                     completers.add(ccs);
                 }
@@ -85,36 +83,37 @@ public abstract class ScrCommandSupport extends AbstractCommand implements Compl
         }
         return completers;
     }
-    
+
     public Map<String, Completer> getOptionalCompleters() {
-    	return null;
+        return null;
     }
-    
+
     /**
-     * Returns the instance of ScrService for this instance of ScrCommandSupport.
-     *
+     * Returns the instance of ScrService for this instance of
+     * ScrCommandSupport.
+     * 
      * @return the ScrCommandSupport or null
      */
     public ScrService getScrService() {
         return scrService;
     }
 
-	public void setScrService(ScrService scrService) {
+    public void setScrService(ScrService scrService) {
         try {
             lock.writeLock().lock();
-    		this.scrService = scrService;
+            this.scrService = scrService;
         } finally {
             lock.writeLock().unlock();
         }
-	}
+    }
 
-	public void unsetScrService(ScrService scrService) {
+    public void unsetScrService(ScrService scrService) {
         try {
             lock.writeLock().lock();
-    		this.scrService = null;
+            this.scrService = null;
         } finally {
             lock.writeLock().unlock();
         }
-	}
+    }
 
 }

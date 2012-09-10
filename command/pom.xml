@@ -116,5 +116,24 @@
                 </includes>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Export-Package>
+                            ${project.artifactId}
+                        </Export-Package>
+                        <Import-Package>
+                            !${project.artifactId},
+                            org.apache.karaf.shell.console.completer,
+                            *
+                        </Import-Package>
+                        <Service-Component>${scr.packages}</Service-Component>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

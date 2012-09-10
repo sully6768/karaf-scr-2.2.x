@@ -16,8 +16,18 @@
  */
 package org.apache.karaf.scr.command.action;
 
+import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.List;
+
+import org.apache.felix.gogo.commands.Option;
+import org.apache.felix.scr.Component;
 import org.apache.felix.scr.ScrService;
+import org.apache.felix.service.command.CommandSession;
+import org.apache.karaf.scr.command.ScrCommandConstants;
 import org.apache.karaf.shell.console.AbstractAction;
+import org.apache.karaf.shell.console.completer.ArgumentCompleter;
+import org.apache.karaf.shell.console.jline.CommandSessionHolder;
 import org.fusesource.jansi.Ansi;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -25,7 +35,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class ScrActionSupport extends AbstractAction {
-    
+
+    @Option(name = ScrActionSupport.SHOW_ALL_OPTION, 
+            aliases = {ScrActionSupport.SHOW_ALL_ALIAS}, 
+            description = "Show all Components including the System Components (hidden by default)", 
+            required = false, 
+            multiValued = false)
+    boolean showHidden = false;
+
+    public static final String SHOW_ALL_OPTION = "-s";
+    public static final String SHOW_ALL_ALIAS = "--show-hidden";
+
     protected final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     private ScrService scrService;
@@ -42,12 +62,52 @@ public abstract class ScrActionSupport extends AbstractAction {
         return null;
     }
 
-    protected abstract Object doScrAction(ScrService scrService)
-            throws Exception;
+    protected abstract Object doScrAction(ScrService scrService) throws Exception;
+    
+    protected boolean isActionable(Component component) {
+        boolean answer = true;
+        
+        return answer;
+    }
+    
+    public static boolean showHiddenComponent(Component component) {
+        boolean answer = false;
+        
+        // First look to see if the show all options is there.
+        // If it is we set showAllFlag to true so the next
+        // section will skip
+        CommandSession commandSession = CommandSessionHolder.getSession();
+        ArgumentCompleter.ArgumentList list = (ArgumentCompleter.ArgumentList)commandSession.get(ArgumentCompleter.ARGUMENTS_LIST);
+        if (list != null && list.getArguments() != null && list.getArguments().length > 0) {
+            List<String> arguments = Arrays.asList(list.getArguments());
+            if (arguments.contains(ScrActionSupport.SHOW_ALL_OPTION) || arguments.contains(ScrActionSupport.SHOW_ALL_ALIAS)) {
+                answer = true;
+            }
+        }
+        
+        return answer;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public static boolean isHiddenComponent(Component component) {
+        boolean answer = false;
+
+        Hashtable properties = (Hashtable)component.getProperties();
+        if (properties != null && properties.containsKey(ScrCommandConstants.HIDDEN_COMPONENT_KEY)) {
+            String value = (String)properties.get(ScrCommandConstants.HIDDEN_COMPONENT_KEY);
+            // If the value is false show the hidden
+            // then someone wants us to display the name
+            // of a hidden component
+            if (value != null && value.equals("true")) {
+                answer = true;
+            }
+        }
+        
+        return answer;
+    }
 
     public String getBoldString(String value) {
-        return Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a(value)
-                .a(Ansi.Attribute.INTENSITY_BOLD_OFF).toString();
+        return Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a(value).a(Ansi.Attribute.INTENSITY_BOLD_OFF).toString();
     }
 
     public String buildRightPadBracketDisplay(String s, int max) {
@@ -81,8 +141,7 @@ public abstract class ScrActionSupport extends AbstractAction {
     /**
      * Sets the scrService Object for this ScrActionSupport instance.
      * 
-     * @param scrService
-     *            the scrService to set
+     * @param scrService the scrService to set
      */
     public void setScrService(ScrService scrService) {
         this.scrService = scrService;

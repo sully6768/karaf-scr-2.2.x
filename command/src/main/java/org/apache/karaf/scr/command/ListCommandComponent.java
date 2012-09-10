@@ -39,7 +39,8 @@ import org.apache.karaf.shell.console.Completer;
         immediate = true,
         properties={ 
             ScrCommandConstants.OSGI_COMMAND_SCOPE_KEY+"="+ScrCommandConstants.SCR_COMMAND, 
-            ScrCommandConstants.OSGI_COMMAND_FUNCTION_KEY+"="+ScrCommandConstants.LIST_FUNCTION})
+            ScrCommandConstants.OSGI_COMMAND_FUNCTION_KEY+"="+ScrCommandConstants.LIST_FUNCTION,
+            ScrCommandConstants.HIDDEN_COMPONENT_KEY + "=true"})
 public class ListCommandComponent extends ScrCommandSupport {
 
     public static final String COMPONENT_NAME = "ListCommand";

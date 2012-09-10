@@ -25,20 +25,19 @@ import org.apache.karaf.scr.command.ScrUtils;
 
 /**
  * Activates the given component by supplying its component name.
- *
  */
 @Command(
-        scope = ScrCommandConstants.SCR_COMMAND, 
-        name = ScrCommandConstants.ACTIVATE_FUNCTION, 
-        description = "Activates a Component for the given name")
-public class ActivateAction extends ScrActionSupport {
+         scope = ScrCommandConstants.SCR_COMMAND, 
+         name = ScrCommandConstants.ACTIVATE_FUNCTION, 
+         description = "Activates a Component for the given name")
+ public class ActivateAction extends ScrActionSupport {
 
-    @Argument(index = 0, name = "name", description = "The name of the Component to activate ", required = true, multiValued = false)
-    String name;
+     @Argument(index = 0, name = "name", description = "The name of the Component to activate ", required = true, multiValued = false)
+     String name;
 
     @Override
     protected Object doScrAction(ScrService scrService) throws Exception {
-        if(logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             logger.debug("Activate Action");
             logger.debug("  Activating the Component: " + name);
         }

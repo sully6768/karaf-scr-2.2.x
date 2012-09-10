@@ -16,6 +16,10 @@
  */
 package org.apache.karaf.scr.management.internal;
 
+import aQute.bnd.annotation.component.Activate;
+import aQute.bnd.annotation.component.Deactivate;
+import aQute.bnd.annotation.component.Reference;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -32,19 +36,18 @@ import org.apache.karaf.scr.management.ScrServiceMBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Deactivate;
-import aQute.bnd.annotation.component.Reference;
-
 @aQute.bnd.annotation.component.Component(
         name = ScrServiceMBeanImpl.COMPONENT_NAME,
         enabled = true,
-        immediate = true)
+        immediate = true,
+        properties={ScrServiceMBeanImpl.HIDDEN_COMPONENT_KEY + "=true"})
 public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBean {
 
     public static final String COMPONENT_NAME = "ScrServiceMBean";
 
     public static final String COMPONENT_LABEL = "Apache Karaf SCR Service MBean";
+
+    public static final String HIDDEN_COMPONENT_KEY = "hidden.component";
     
     private static final Logger LOGGER = LoggerFactory.getLogger(ScrServiceMBeanImpl.class);
 

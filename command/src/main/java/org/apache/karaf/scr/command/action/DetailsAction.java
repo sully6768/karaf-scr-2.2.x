@@ -16,6 +16,8 @@
  */
 package org.apache.karaf.scr.command.action;
 
+import java.util.Hashtable;
+
 import org.apache.felix.gogo.commands.Argument;
 import org.apache.felix.gogo.commands.Command;
 import org.apache.felix.scr.Component;
@@ -39,6 +41,7 @@ public class DetailsAction extends ScrActionSupport {
     @Argument(index = 0, name = "name", description = "The name of the Component to display the detials of", required = true, multiValued = false)
     String name;
 
+    @SuppressWarnings({"rawtypes"})
     @Override
     protected Object doScrAction(ScrService scrService) throws Exception {
         if (logger.isDebugEnabled()) {
@@ -49,6 +52,15 @@ public class DetailsAction extends ScrActionSupport {
         for (Component component : ScrUtils.emptyIfNull(Component.class, components)) {
             printDetail("  Name                : ", component.getName());
             printDetail("  State               : ", ScrUtils.getState(component.getState()));
+            
+            Hashtable props = (Hashtable)component.getProperties();
+            if(!props.isEmpty()) {
+                printDetail("  Properties          : ", ScrUtils.getState(component.getState()));
+                for (Object key : props.keySet()) {
+                    Object value = props.get(key);
+                    printDetail("    ", key+"="+value);
+                }
+            }
             Reference[] references = component.getReferences();
             System.out.println(getBoldString("References"));
 

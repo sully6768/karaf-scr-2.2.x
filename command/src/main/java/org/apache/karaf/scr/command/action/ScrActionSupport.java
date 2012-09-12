@@ -63,16 +63,16 @@ public abstract class ScrActionSupport extends AbstractAction {
     }
 
     protected abstract Object doScrAction(ScrService scrService) throws Exception;
-    
+
     protected boolean isActionable(Component component) {
         boolean answer = true;
-        
+
         return answer;
     }
-    
+
     public static boolean showHiddenComponent(Component component) {
         boolean answer = false;
-        
+
         // First look to see if the show all options is there.
         // If it is we set showAllFlag to true so the next
         // section will skip
@@ -84,10 +84,10 @@ public abstract class ScrActionSupport extends AbstractAction {
                 answer = true;
             }
         }
-        
+
         return answer;
     }
-    
+
     @SuppressWarnings("rawtypes")
     public static boolean isHiddenComponent(Component component) {
         boolean answer = false;
@@ -102,7 +102,7 @@ public abstract class ScrActionSupport extends AbstractAction {
                 answer = true;
             }
         }
-        
+
         return answer;
     }
 

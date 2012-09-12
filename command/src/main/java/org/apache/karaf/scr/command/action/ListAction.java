@@ -29,7 +29,7 @@ import org.apache.karaf.scr.command.ScrUtils;
          name = ScrCommandConstants.LIST_FUNCTION, 
          description = "Displays a list of available components")
 public class ListAction extends ScrActionSupport {
-    
+
     @Override
     protected Object doScrAction(ScrService scrService) throws Exception {
         if (logger.isDebugEnabled()) {
@@ -46,7 +46,7 @@ public class ListAction extends ScrActionSupport {
                     // do nothing
                 } else {
                     // We aren't hidden so print it
-                    printComponent(component);       
+                    printComponent(component);
                 }
             }
         }

@@ -30,12 +30,12 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentConstants;
 
 /**
- * Displays the details associated with a given component by supplying its component name.
+ * Displays the details associated with a given component by supplying its
+ * component name.
  */
-@Command(
-        scope = ScrCommandConstants.SCR_COMMAND, 
-        name = ScrCommandConstants.DETAILS_FUNCTION, 
-        description = "Displays a list of available components")
+@Command(scope = ScrCommandConstants.SCR_COMMAND, 
+         name = ScrCommandConstants.DETAILS_FUNCTION, 
+         description = "Displays a list of available components")
 public class DetailsAction extends ScrActionSupport {
 
     @Argument(index = 0, name = "name", description = "The name of the Component to display the detials of", required = true, multiValued = false)
@@ -52,13 +52,13 @@ public class DetailsAction extends ScrActionSupport {
         for (Component component : ScrUtils.emptyIfNull(Component.class, components)) {
             printDetail("  Name                : ", component.getName());
             printDetail("  State               : ", ScrUtils.getState(component.getState()));
-            
+
             Hashtable props = (Hashtable)component.getProperties();
-            if(!props.isEmpty()) {
-                printDetail("  Properties          : ", ScrUtils.getState(component.getState()));
+            if (!props.isEmpty()) {
+                System.out.println(getBoldString("  Properties          : "));
                 for (Object key : props.keySet()) {
                     Object value = props.get(key);
-                    printDetail("    ", key+"="+value);
+                    printDetail("    ", key + "=" + value);
                 }
             }
             Reference[] references = component.getReferences();

@@ -21,10 +21,10 @@ import java.lang.reflect.Array;
 import org.apache.felix.scr.Component;
 
 public class ScrUtils {
-    
+
     @SuppressWarnings("unchecked")
     public static <T> T[] emptyIfNull(Class<T> clazz, T[] objects) {
-        return objects == null ? (T[])Array.newInstance(clazz,0): objects;
+        return objects == null ? (T[])Array.newInstance(clazz, 0) : objects;
     }
 
     public static String getState(int componentState) {

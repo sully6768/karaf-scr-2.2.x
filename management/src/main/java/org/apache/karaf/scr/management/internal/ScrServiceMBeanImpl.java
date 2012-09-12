@@ -37,10 +37,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @aQute.bnd.annotation.component.Component(
-        name = ScrServiceMBeanImpl.COMPONENT_NAME,
-        enabled = true,
-        immediate = true,
-        properties={ScrServiceMBeanImpl.HIDDEN_COMPONENT_KEY + "=true"})
+    name = ScrServiceMBeanImpl.COMPONENT_NAME, 
+    enabled = true, 
+    immediate = true, 
+    properties = {ScrServiceMBeanImpl.HIDDEN_COMPONENT_KEY + "=true"})
 public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBean {
 
     public static final String COMPONENT_NAME = "ScrServiceMBean";
@@ -48,7 +48,7 @@ public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBea
     public static final String COMPONENT_LABEL = "Apache Karaf SCR Service MBean";
 
     public static final String HIDDEN_COMPONENT_KEY = "hidden.component";
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ScrServiceMBeanImpl.class);
 
     private MBeanServer mBeanServer;
@@ -69,8 +69,9 @@ public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBea
     }
 
     /**
-     * Service component activation call back.  Called when all dependencies are satisfied.
-     *  
+     * Service component activation call back. Called when all dependencies are
+     * satisfied.
+     * 
      * @throws Exception
      */
     @Activate
@@ -91,9 +92,9 @@ public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBea
     }
 
     /**
-     * Service component deactivation call back.  Called after the component is in an active 
-     * state when any dependencies become unsatisfied.
-     *  
+     * Service component deactivation call back. Called after the component is
+     * in an active state when any dependencies become unsatisfied.
+     * 
      * @throws Exception
      */
     @Deactivate
@@ -118,13 +119,13 @@ public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBea
     }
 
     public boolean isComponentActive(String componentName) throws Exception {
-        return (componentState(componentName) == Component.STATE_ACTIVE)?true:false;
+        return (componentState(componentName) == Component.STATE_ACTIVE) ? true : false;
     }
-    
+
     public int componentState(String componentName) throws Exception {
         int state = -1;
         final Component component = findComponent(componentName);
-        if(component != null)
+        if (component != null)
             state = component.getState();
         else
             LOGGER.warn("No component found for name: " + componentName);
@@ -133,7 +134,7 @@ public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBea
 
     public void activateComponent(String componentName) throws Exception {
         final Component component = findComponent(componentName);
-        if(component != null)
+        if (component != null)
             component.enable();
         else
             LOGGER.warn("No component found for name: " + componentName);
@@ -141,12 +142,12 @@ public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBea
 
     public void deactiveateComponent(String componentName) throws Exception {
         final Component component = findComponent(componentName);
-        if(component != null)
+        if (component != null)
             component.disable();
         else
             LOGGER.warn("No component found for name: " + componentName);
     }
-    
+
     private Component findComponent(String componentName) {
         Component answer = null;
         if (scrService.getComponents(componentName) != null) {
@@ -157,31 +158,31 @@ public class ScrServiceMBeanImpl extends StandardMBean implements ScrServiceMBea
         }
         return answer;
     }
-    
-    private Component[] safe( Component[] components ) {
+
+    private Component[] safe(Component[] components) {
         return components == null ? new Component[0] : components;
     }
 
-	/**
-	 * @param mBeanServer the mBeanServer to set
-	 */
+    /**
+     * @param mBeanServer the mBeanServer to set
+     */
     @Reference
-	public void setmBeanServer(MBeanServer mBeanServer) {
-		this.mBeanServer = mBeanServer;
-	}
-	
+    public void setmBeanServer(MBeanServer mBeanServer) {
+        this.mBeanServer = mBeanServer;
+    }
+
     public void unsetmBeanServer(MBeanServer mBeanServer) {
         this.mBeanServer = null;
     }
 
-	/**
-	 * @param scrService the scrService to set
-	 */
-	@Reference
-	public void setScrService(ScrService scrService) {
-		this.scrService = scrService;
-	}
-	
+    /**
+     * @param scrService the scrService to set
+     */
+    @Reference
+    public void setScrService(ScrService scrService) {
+        this.scrService = scrService;
+    }
+
     public void unsetScrService(ScrService scrService) {
         this.scrService = null;
     }

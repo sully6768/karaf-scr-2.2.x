@@ -20,7 +20,7 @@ public interface ScrServiceMBean {
     String[] listComponents() throws Exception;
 
     boolean isComponentActive(String componentName) throws Exception;
-    
+
     int componentState(String componentName) throws Exception;
 
     void activateComponent(String componentName) throws Exception;

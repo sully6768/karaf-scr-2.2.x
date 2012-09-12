@@ -16,12 +16,12 @@
  */
 package org.apache.karaf.scr.command;
 
-import java.util.List;
-
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
+
+import java.util.List;
 
 import org.apache.felix.gogo.commands.Action;
 import org.apache.felix.scr.ScrService;
@@ -57,19 +57,19 @@ public class ListCommandComponent extends ScrCommandSupport {
     }
 
     @Activate
-    public void activate(){
+    public void activate() {
         logger.info("Activating the " + COMPONENT_LABEL);
     }
-    
+
     @Deactivate
-    public void deactivate(){
+    public void deactivate() {
         logger.info("Deactivating the " + COMPONENT_LABEL);
     }
-    
+
     @Reference
     @Override
     public void setScrService(ScrService scrService) {
-    	super.setScrService(scrService);
+        super.setScrService(scrService);
     }
 
 }

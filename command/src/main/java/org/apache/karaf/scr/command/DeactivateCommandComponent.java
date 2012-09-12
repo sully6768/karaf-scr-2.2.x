@@ -16,13 +16,13 @@
  */
 package org.apache.karaf.scr.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.felix.gogo.commands.Action;
 import org.apache.felix.scr.ScrService;
@@ -35,14 +35,14 @@ import org.apache.karaf.shell.console.Completer;
  * Shell Command used to deactivate a Declarative Service Component.
  */
 @Component(
-        provide=CompletableFunction.class, 
-        name = DeactivateCommandComponent.COMPONENT_NAME, 
-        enabled = true, 
-        immediate = true,
-        properties={ 
-            ScrCommandConstants.OSGI_COMMAND_SCOPE_KEY+"="+ScrCommandConstants.SCR_COMMAND, 
-            ScrCommandConstants.OSGI_COMMAND_FUNCTION_KEY+"="+ScrCommandConstants.DEACTIVATE_FUNCTION,
-            ScrCommandConstants.HIDDEN_COMPONENT_KEY + "=true"})
+           provide=CompletableFunction.class, 
+           name = DeactivateCommandComponent.COMPONENT_NAME, 
+           enabled = true, 
+           immediate = true,
+           properties={ 
+               ScrCommandConstants.OSGI_COMMAND_SCOPE_KEY+"="+ScrCommandConstants.SCR_COMMAND, 
+               ScrCommandConstants.OSGI_COMMAND_FUNCTION_KEY+"="+ScrCommandConstants.DEACTIVATE_FUNCTION,
+               ScrCommandConstants.HIDDEN_COMPONENT_KEY + "=true"})
 public class DeactivateCommandComponent extends ScrCommandSupport {
 
     public static final String COMPONENT_NAME = "DeactivateCommand";
@@ -62,19 +62,19 @@ public class DeactivateCommandComponent extends ScrCommandSupport {
     }
 
     @Activate
-    public void activate(){
+    public void activate() {
         logger.info("Activating the " + COMPONENT_LABEL);
     }
-    
+
     @Deactivate
-    public void deactivate(){
+    public void deactivate() {
         logger.info("Deactivating the " + COMPONENT_LABEL);
     }
-    
+
     @Reference
     @Override
     public void setScrService(ScrService scrService) {
-    	super.setScrService(scrService);
+        super.setScrService(scrService);
     }
 
 }

@@ -16,13 +16,13 @@
  */
 package org.apache.karaf.scr.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.felix.gogo.commands.Action;
 import org.apache.felix.scr.ScrService;
@@ -35,14 +35,14 @@ import org.apache.karaf.shell.console.Completer;
  * Shell Command used to activate a Declarative Service Component.
  */
 @Component(
-        provide=CompletableFunction.class, 
-        name = ActivateCommandComponent.COMPONENT_NAME, 
-        enabled = true, 
-        immediate = true,
-        properties={ 
-            ScrCommandConstants.OSGI_COMMAND_SCOPE_KEY+"="+ScrCommandConstants.SCR_COMMAND, 
-            ScrCommandConstants.OSGI_COMMAND_FUNCTION_KEY+"="+ScrCommandConstants.ACTIVATE_FUNCTION,
-            ScrCommandConstants.HIDDEN_COMPONENT_KEY + "=true"})
+           provide=CompletableFunction.class, 
+           name = ActivateCommandComponent.COMPONENT_NAME, 
+           enabled = true, 
+           immediate = true,
+           properties={ 
+               ScrCommandConstants.OSGI_COMMAND_SCOPE_KEY+"="+ScrCommandConstants.SCR_COMMAND, 
+               ScrCommandConstants.OSGI_COMMAND_FUNCTION_KEY+"="+ScrCommandConstants.ACTIVATE_FUNCTION,
+               ScrCommandConstants.HIDDEN_COMPONENT_KEY + "=true"})
 public class ActivateCommandComponent extends ScrCommandSupport {
 
     public static final String COMPONENT_NAME = "ActivateCommand";

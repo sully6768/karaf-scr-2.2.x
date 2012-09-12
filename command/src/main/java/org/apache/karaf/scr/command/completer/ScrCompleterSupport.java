@@ -50,7 +50,7 @@ public abstract class ScrCompleterSupport implements Completer {
                     // We display all because we are overridden
                     if (availableComponent(component)) {
                         delegate.getStrings().add(component.getName());
-                    } 
+                    }
                 } else {
                     if (ScrActionSupport.isHiddenComponent(component)) {
                         // do nothing
@@ -58,7 +58,7 @@ public abstract class ScrCompleterSupport implements Completer {
                         // We aren't hidden so print it
                         if (availableComponent(component)) {
                             delegate.getStrings().add(component.getName());
-                        }   
+                        }
                     }
                 }
             }
